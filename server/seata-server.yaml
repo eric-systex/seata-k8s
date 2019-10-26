@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: seata 
+  namespace: seata-demo-at
+  labels:
+    app: seata
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8091 
+    targetPort: 8091 
+  selector:
+    app: seata
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: seata
+  namespace: seata-demo-at
+  labels:
+    app: seata
+spec:
+  selector: 
+    matchLabels:
+      app: seata
+  template:
+    metadata:
+      labels:
+        app: seata
+    spec:
+      containers:
+      - name: seata
+        imagePullPolicy: IfNotPresent
+        image: 348053640110.dkr.ecr.us-west-2.amazonaws.com/seata-server:0.8.1  
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+          requests:
+            cpu: 1000m
+            memory: 2Gi
+        ports:
+        - containerPort: 8091
