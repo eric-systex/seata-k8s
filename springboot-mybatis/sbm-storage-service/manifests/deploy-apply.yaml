@@ -1,0 +1,123 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: api-db-pvc
+  namespace: seata-demo-at 
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-db
+  labels:
+    app: api-db
+  namespace: seata-demo-at 
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+  selector:
+    app: api-db
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-db
+  labels:
+    app: api-db
+  namespace: seata-demo-at 
+spec:
+  selector:
+    matchLabels:
+      app: api-db
+  template:
+    metadata:
+      labels:
+        app: api-db
+    spec:
+      containers:
+        - image: mariadb:10.3.14
+          name: api-db
+          env:
+            - name: TZ
+              value: "Asia/Taipei"
+            - name: MYSQL_ROOT_PASSWORD
+              value: "root"
+          ports:
+            - containerPort: 3306
+          resources:
+            limits:
+              cpu: 100m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: api-db-pvc
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: api-storage
+  namespace: seata-demo-at
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-storage
+  namespace: seata-demo-at
+  labels:
+    app: api-storage
+spec:
+  ports:
+  - protocol: TCP
+    port: 8080
+    name: http
+  selector:
+    app: api-storage
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: api-storage
+  namespace: seata-demo-at
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: api-storage
+    spec:
+      serviceAccountName: api-storage
+      containers:
+      - name: api-storage
+        image: 348053640110.dkr.ecr.us-west-2.amazonaws.com/seata-k8s-at:sbm-storage-service
+        ports:
+        - containerPort: 8080
+        env:
+          - name: HSM_URL
+            value: "http://api-hsm:8080/api"
+          - name: MERCHANT_URL
+            value: "http://api-merchant:8080/api"
+          - name: MYSQL_HOST
+            value: "api-fisc-db.database"
+          - name: MYSQL_PORT
+            value: "3306"
+          - name: MYSQL_DB
+            value: "neptune"
+          - name: MYSQL_USER
+            value: "fisc"
+          - name: MYSQL_PASS
+            value: "fisc"
+      terminationGracePeriodSeconds: 30
+
