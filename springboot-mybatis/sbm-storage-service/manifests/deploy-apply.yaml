@@ -35,6 +35,7 @@ spec:
       containers:
       - name: api-storage
         image: 348053640110.dkr.ecr.us-west-2.amazonaws.com/seata-k8s-at:sbm-storage-service
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         env:
