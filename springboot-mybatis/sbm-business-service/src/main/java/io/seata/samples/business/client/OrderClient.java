@@ -13,7 +13,7 @@ public class OrderClient {
     private RestTemplate restTemplate;
 
     public void create(String userId, String commodityCode, int orderCount) {
-        String url = "http://sbm-order-service:8080/api/order/debit?userId=" + userId + "&commodityCode=" + commodityCode + "&count=" + orderCount;
+        String url = "http://api-order:8080/api/order/debit?userId=" + userId + "&commodityCode=" + commodityCode + "&count=" + orderCount;
         try {
             restTemplate.getForEntity(url, Void.class);
         } catch (Exception e) {

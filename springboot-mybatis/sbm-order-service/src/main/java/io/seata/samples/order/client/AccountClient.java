@@ -15,7 +15,7 @@ public class AccountClient {
     private RestTemplate restTemplate;
 
     public void debit(String userId, BigDecimal orderMoney) {
-        String url = "http://127.0.0.1:8083?userId=" + userId + "&orderMoney=" + orderMoney;
+        String url = "http://api-account:8080?userId=" + userId + "&orderMoney=" + orderMoney;
         try {
             restTemplate.getForEntity(url, Void.class);
         } catch (Exception e) {
