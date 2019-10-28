@@ -17,8 +17,7 @@ public class OrderClient {
         try {
             restTemplate.getForEntity(url, Void.class);
         } catch (Exception e) {
-            System.err.println("create url {} ,error:");
-            e.printStackTrace();
+            log.error("create url {} ,error:", url);
             throw new RuntimeException();
         }
     }

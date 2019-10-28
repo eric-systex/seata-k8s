@@ -19,8 +19,7 @@ public class StorageClient {
         try {
             restTemplate.getForEntity(url, Void.class);
         } catch (Exception e) {
-            System.err.println("deduct url {} ,error:");
-            e.printStackTrace();
+            log.error("deduct url {} ,error:", url, e);
             throw new RuntimeException();
         }
     }

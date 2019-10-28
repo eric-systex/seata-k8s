@@ -101,7 +101,7 @@ spec:
       serviceAccountName: api-business
       containers:
       - name: api-business
-        image: 348053640110.dkr.ecr.us-west-2.amazonaws.com/seata-k8s-at:sbm-business-service-v1.6
+        image: 348053640110.dkr.ecr.us-west-2.amazonaws.com/seata-k8s-at:sbm-business-service
         ports:
         - containerPort: 8080
         env:
