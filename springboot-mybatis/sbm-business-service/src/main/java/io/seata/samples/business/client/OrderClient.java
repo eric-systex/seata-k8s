@@ -13,11 +13,12 @@ public class OrderClient {
     private RestTemplate restTemplate;
 
     public void create(String userId, String commodityCode, int orderCount) {
-        String url = "http://127.0.0.1:8082/api/order/debit?userId=" + userId + "&commodityCode=" + commodityCode + "&count=" + orderCount;
+        String url = "http://sbm-order-service:8080/api/order/debit?userId=" + userId + "&commodityCode=" + commodityCode + "&count=" + orderCount;
         try {
             restTemplate.getForEntity(url, Void.class);
         } catch (Exception e) {
-            log.error("create url {} ,error:", url);
+            System.err.println("create url {} ,error:");
+            e.printStackTrace();
             throw new RuntimeException();
         }
     }
