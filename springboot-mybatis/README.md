@@ -7,7 +7,7 @@ Source from
 * https://github.com/seata/seata-samples/tree/master/springboot-mybatis
 
 References
-* https://github.com/seata/awesome-seata/blob/master/wiki/zh-cn/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E4%B9%8BSeata-Client%E5%8E%9F%E7%90%86%E5%8F%8A%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3.md
+* https://github.com/seata/awesome-seata/blob/master/wiki/zh-cn/分布式事务之Seata-Client原理及流程详解.md
 
 ## Initialization
 
