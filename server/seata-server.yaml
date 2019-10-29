@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: seata 
-  namespace: seata-demo-at
+  namespace: seata-demo
   labels:
     app: seata
 spec:
@@ -17,7 +17,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: seata
-  namespace: seata-demo-at
+  namespace: seata-demo
   labels:
     app: seata
 spec:

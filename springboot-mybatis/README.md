@@ -1,7 +1,16 @@
 # Seata AT Mode Sample
 **Springboot** + MyBatis + **Seata AT** and Deploy to **Kubernetes** (EKS & ECR)
 
+Source from
+* https://github.com/seata/seata
+* https://github.com/seata/seata-samples
+* https://github.com/seata/seata-samples/tree/master/springboot-mybatis
+
+References
+* https://github.com/seata/awesome-seata/blob/master/wiki/zh-cn/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E4%B9%8BSeata-Client%E5%8E%9F%E7%90%86%E5%8F%8A%E6%B5%81%E7%A8%8B%E8%AF%A6%E8%A7%A3.md
+
 ## Initialization
+
 ### Create K8s Namespace
 ```
 kubectl create ns seata-demo-at
@@ -13,20 +22,8 @@ kubectl apply -f deploy-db.yaml
 kubectl exec -i $(kubectl get po --selector app=api-db -n seata-demo-at --output=jsonpath={.items..metadata.name}) -n seata-demo-at --  mysql -u root -proot < all_in_one.sql
 ```
 
-## Deploy Seata Server
-version **0.8.1**
-```
-# build image
-docker build -t 348053640110.dkr.ecr.us-west-2.amazonaws.com/seata-server:0.8.1 server
-
-# push image
-docker push 348053640110.dkr.ecr.us-west-2.amazonaws.com/seata-server:0.8.1
-
-# deploy
-kubectl apply -f server/seata-server.yaml
-```
-
 ## Deploy Microservices 
+
 ### Install Dependency
 Install the following artifacts
 * sbm-common-service
@@ -34,7 +31,7 @@ Install the following artifacts
 * seata-sample
 
 ```
-mvn clean install
+mvn -f ../pom.xml clean install 
 ```
 
 ### Build Docker Image
