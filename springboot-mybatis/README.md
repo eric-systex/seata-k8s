@@ -18,8 +18,8 @@ kubectl create ns seata-demo-at
 
 ### DB Schema and Data
 ```
-kubectl apply -f deploy-db.yaml
-kubectl exec -i $(kubectl get po --selector app=api-db -n seata-demo-at --output=jsonpath={.items..metadata.name}) -n seata-demo-at --  mysql -u root -proot < all_in_one.sql
+kubectl apply -f sql/deploy-db.yaml
+kubectl exec -i $(kubectl get po --selector app=api-db -n seata-demo-at --output=jsonpath={.items..metadata.name}) -n seata-demo-at -- mysql -u root -proot < sql/all_in_one.sql
 ```
 
 ## Deploy Microservices 
