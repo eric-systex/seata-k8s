@@ -22,16 +22,16 @@
 
     <!-- fescar bean scanner -->
     <bean class="io.seata.spring.annotation.GlobalTransactionScanner">
-        <constructor-arg value="tcc-sample"/>
-        <constructor-arg value="my_test_tx_group"/>
+        <constructor-arg value="transfer-service"/>
+        <constructor-arg value="my_tcc_tx_group"/>
     </bean>
 
-    <bean id="firstTccActionImpl" class="io.seata.samples.tcc.transfer.action.impl.FirstTccActionImpl"/>
+    <!-- <bean id="firstTccActionImpl" class="io.seata.samples.tcc.transfer.action.impl.FirstTccActionImpl"/>
 
     <bean id="secondTccActionImpl" class="io.seata.samples.tcc.transfer.action.impl.SecondTccActionImpl"/>
 
     <bean id="transferService" class="io.seata.samples.tcc.transfer.activity.impl.TransferServiceImpl"/>
 
-    <bean id="transferDataPrepares" class="io.seata.samples.tcc.transfer.env.TransferDataPrepares"/>
+    <bean id="transferDataPrepares" class="io.seata.samples.tcc.transfer.env.TransferDataPrepares"/> -->
 
 </beans>

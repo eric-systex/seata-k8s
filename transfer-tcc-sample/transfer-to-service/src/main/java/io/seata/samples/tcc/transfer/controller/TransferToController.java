@@ -1,25 +1,38 @@
 package io.seata.samples.tcc.transfer.controller;
 
-import io.seata.samples.tcc.transfer.action.SecondTccAction;
-import io.seata.core.context.RootContext;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import java.sql.SQLException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import io.seata.core.context.RootContext;
+import io.seata.samples.tcc.transfer.service.SecondTccService;
 
 @RequestMapping("/api/transfer-to")
 @RestController
 public class TransferToController {
 
-    private SecondTccAction secondTccAction;
+    @Autowired
+    SecondTccService secondService;
 
     @GetMapping(value = "/add")
-    public void add(@RequestParam String accountNo, @RequestParam Integer amount) throws SQLException {
-        System.out.println("transfer-to XID " + RootContext.getXID());
-        secondTccAction.prepareAdd(null, accountNo, amount);
+    public void deduct(@RequestParam String accountNo, @RequestParam Double amount) throws SQLException {
+        System.out.println("to XID " + RootContext.getXID());
+        secondService.prepareAdd(null, accountNo, amount);
     }
 
-    public void setSecondTccAction(SecondTccAction secondTccAction) {
-        this.secondTccAction = secondTccAction;
+    @GetMapping(value = "/commit")
+    public void commit() throws SQLException {
+        System.out.println("to XID " + RootContext.getXID());
+        secondService.commit(null);
+    }
+
+    @GetMapping(value = "/rollback")
+    public void rollback() throws SQLException {
+        System.out.println("to XID " + RootContext.getXID());
+        secondService.rollback(null);
     }
 }

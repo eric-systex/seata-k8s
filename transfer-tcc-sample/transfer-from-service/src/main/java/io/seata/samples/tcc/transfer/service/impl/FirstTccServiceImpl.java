@@ -1,36 +1,34 @@
-package io.seata.samples.tcc.transfer.action;
+package io.seata.samples.tcc.transfer.service.impl;
 
-import io.seata.rm.tcc.api.BusinessActionContext;
-import io.seata.rm.tcc.api.BusinessActionContextParameter;
-import io.seata.rm.tcc.api.TwoPhaseBusinessAction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import io.seata.samples.tcc.transfer.dao.impl.AccountDAOImpl;
-import io.seata.samples.tcc.transfer.domains.Account;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- * TCC参与者：扣钱
- *
- * @author zhangsen
- */
+import io.seata.core.context.RootContext;
+import io.seata.rm.tcc.api.BusinessActionContext;
+import io.seata.rm.tcc.api.BusinessActionContextParameter;
+import io.seata.rm.tcc.api.TwoPhaseBusinessAction;
+import io.seata.samples.tcc.transfer.dao.AccountDAO;
+import io.seata.samples.tcc.transfer.domains.Account;
+import io.seata.samples.tcc.transfer.service.FirstTccService;
+
 @Service
-public class FirstTccAction {
-	
-    /**
+public class FirstTccServiceImpl implements FirstTccService {
+
+	/**
      * 扣钱账户 DAO
      */
     @Autowired
-    private AccountDAOImpl fromAccountDAO;
-
-    /**
+    private AccountDAO fromAccountDAO;
+	
+	/**
      * 扣钱数据源事务模板
      */
     @Autowired
     private TransactionTemplate fromDsTransactionTemplate;
-
+    
     /**
      * 一阶段准备，冻结 转账资金
      * @param businessActionContext
@@ -38,13 +36,13 @@ public class FirstTccAction {
      * @param amount
      * @return
      */
-    @TwoPhaseBusinessAction(name = "firstTccAction", commitMethod = "commit", rollbackMethod = "rollback")
+    
     public boolean prepareMinus(BusinessActionContext businessActionContext,
                                 @BusinessActionContextParameter(paramName = "accountNo") String accountNo,
                                 @BusinessActionContextParameter(paramName = "amount") double amount) {
 
         //分布式事务ID
-        final String xid = businessActionContext.getXid();
+        final String xid = RootContext.getXID();
 
         return fromDsTransactionTemplate.execute(new TransactionCallback<Boolean>(){
 
@@ -81,7 +79,7 @@ public class FirstTccAction {
      */
     public boolean commit(BusinessActionContext businessActionContext) {
         //分布式事务ID
-        final String xid = businessActionContext.getXid();
+        final String xid = RootContext.getXID();
         //账户ID
         final String accountNo = String.valueOf(businessActionContext.getActionContext("accountNo"));
         //转出金额
@@ -119,7 +117,7 @@ public class FirstTccAction {
      */
     public boolean rollback(BusinessActionContext businessActionContext) {
         //分布式事务ID
-        final String xid = businessActionContext.getXid();
+        final String xid = RootContext.getXID();
         //账户ID
         final String accountNo = String.valueOf(businessActionContext.getActionContext("accountNo"));
         //转出金额
@@ -147,4 +145,5 @@ public class FirstTccAction {
             }
         });
     }
+    
 }

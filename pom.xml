@@ -62,6 +62,7 @@
     </properties>
     <modules>
         <module>springboot-mybatis</module>
+        <module>transfer-tcc-sample</module>
     </modules>
 
     <dependencies>

@@ -38,7 +38,7 @@
 
     <bean id="fromDsSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="fromAccountDataSource" />
-        <property  name="configLocation"  value="classpath:sqlmap/sqlMapConfig.xml"/>
+        <property name="configLocation" value="classpath:sqlmap/sqlMapConfig.xml"/>
     </bean>
 
     <bean id="fromDsSqlSession" class="org.mybatis.spring.SqlSessionTemplate">

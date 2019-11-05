@@ -24,8 +24,19 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.seata</groupId>
-            <artifactId>sbm-common-service</artifactId>
+            <groupId>com.caucho</groupId>
+            <artifactId>hessian</artifactId>
+            <version>4.0.38</version>
+        </dependency>
+        <dependency>
+            <groupId>com.systex.seata</groupId>
+            <artifactId>transfer-from-service</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.systex.seata</groupId>
+            <artifactId>transfer-to-service</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
