@@ -95,9 +95,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${springboot.version}</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -121,4 +118,42 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>services-client</id>
+            <build>
+                <defaultGoal>package</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>2.3.2</version>
+                        <configuration>
+                            <includes>
+                                <include>io/seata/samples/tcc/transfer/service/SecondTccService.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>3.0.2</version>
+                        <configuration>
+                            <finalName>transfer-to-service-client</finalName>
+                            <includes>
+                                <include>**/*.class</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>io.seata</groupId>
+                    <artifactId>seata-all</artifactId>
+                    <version>${seata.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>
