@@ -42,7 +42,7 @@ public class SecondTccServiceImpl implements SecondTccService {
             @BusinessActionContextParameter(paramName = "amount") double amount) {
     	
         //分布式事务ID
-        final String xid = RootContext.getXID();
+        final String xid = businessActionContext.getXid();
 
         return toDsTransactionTemplate.execute(new TransactionCallback<Boolean>(){
 
@@ -77,7 +77,7 @@ public class SecondTccServiceImpl implements SecondTccService {
      */
     public boolean commit(BusinessActionContext businessActionContext) {
         //分布式事务ID
-        final String xid = RootContext.getXID();
+        final String xid = businessActionContext.getXid();
         //账户ID
         final String accountNo = String.valueOf(businessActionContext.getActionContext("accountNo"));
         //转出金额
@@ -114,7 +114,7 @@ public class SecondTccServiceImpl implements SecondTccService {
      */
     public boolean rollback(BusinessActionContext businessActionContext) {
         //分布式事务ID
-        final String xid = RootContext.getXID();
+        final String xid = businessActionContext.getXid();
         //账户ID
         final String accountNo = String.valueOf(businessActionContext.getActionContext("accountNo"));
         //转出金额
