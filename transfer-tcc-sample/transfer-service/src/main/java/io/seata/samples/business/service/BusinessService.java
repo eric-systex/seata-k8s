@@ -29,26 +29,26 @@ public class BusinessService {
      * @param orderCount
      */
     @GlobalTransactional
-    public void transfer(String from, String to, double amount) {
+    public boolean transfer(String from, String to, double amount) {
         LOGGER.info("transfer begin ... xid: " + RootContext.getXID());
 
         //扣钱参与者，一阶段执行
-        fromService.prepareMinus(null, from, amount);
+        boolean ret = fromService.prepareMinus(null, from, amount);
 
-        // if(!ret){
-        //     //扣钱参与者，一阶段失败; 回滚本地事务和分布式事务
-        //     throw new RuntimeException("账号:["+from+"] 预扣款失败");
-        // }
+		if (!ret) {
+			// 扣钱参与者，一阶段失败; 回滚本地事务和分布式事务
+			throw new RuntimeException("账号:[" + from + "] 预扣款失败");
+		}
 
         //加钱参与者，一阶段执行
-        toService.prepareAdd(null, to, amount);
+        ret = toService.prepareAdd(null, to, amount);
 
-        // if(!ret){
-        //     throw new RuntimeException("账号:["+to+"] 预收款失败");
-        // }
+		if (!ret) {
+			throw new RuntimeException("账号:[" + to + "] 预收款失败");
+		}
 
         System.out.println(String.format("transfer amount[%s] from [%s] to [%s] finish.", String.valueOf(amount), from, to));
-        // return true;
+		return true;
 
     }
 }
