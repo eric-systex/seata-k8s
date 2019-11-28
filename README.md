@@ -1,6 +1,7 @@
 # Seata in Kubernetes
 Running in **Kubernetes** (EKS & ECR)
 
+
 ## Initialization
 ### Create K8s Namespace
 ```
