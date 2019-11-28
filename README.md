@@ -1,4 +1,4 @@
-# Seata in Kubernetes 
+# Seata in Kubernetes
 Running in **Kubernetes** (EKS & ECR)
 
 ## Initialization
