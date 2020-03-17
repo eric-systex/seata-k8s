@@ -13,7 +13,7 @@ spec:
   selector:
     app: seata
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: seata
@@ -26,13 +26,15 @@ spec:
       app: seata
   template:
     metadata:
+      annotations:
+        sidecar.istio.io/inject: "false"
       labels:
         app: seata
     spec:
       containers:
       - name: seata
         imagePullPolicy: IfNotPresent
-        image: 348053640110.dkr.ecr.us-west-2.amazonaws.com/seata-server:0.8.1  
+        image: registry.example.com/keid/seata-server:1.1.0
         resources:
           limits:
             cpu: 1000m

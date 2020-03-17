@@ -12,7 +12,7 @@ ENV SEATA_USER="seata" \
     JAVA="/usr/lib/jvm/java-1.8.0-openjdk/bin/java" \
     TIME_ZONE="Asia/Taipei" 
 
-ARG SEATA_VERSION=0.8.1
+ARG SEATA_VERSION=1.1.0
 
 WORKDIR /$BASE_DIR
 
