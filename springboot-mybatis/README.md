@@ -44,10 +44,10 @@ mvn -f sbm-account-service/pom.xml clean package dockerfile:build
 
 ### Push Docker Image
 ```
-docker push 348053640110.dkr.ecr.us-west-2.amazonaws.com/seata-k8s-at:sbm-business-service
-docker push 348053640110.dkr.ecr.us-west-2.amazonaws.com/seata-k8s-at:sbm-storage-service
-docker push 348053640110.dkr.ecr.us-west-2.amazonaws.com/seata-k8s-at:sbm-order-service
-docker push 348053640110.dkr.ecr.us-west-2.amazonaws.com/seata-k8s-at:sbm-account-service
+docker push registry.example.com/seata/seata-at:sbm-business-service
+docker push registry.example.com/seata/seata-at:sbm-storage-service
+docker push registry.example.com/seata/seata-at:sbm-order-service
+docker push registry.example.com/seata/seata-at:sbm-account-service
 ```
 
 ### Deploy

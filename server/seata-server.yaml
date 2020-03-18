@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: seata 
-  namespace: seata-demo
+  namespace: seata-demo-at
   labels:
     app: seata
 spec:
@@ -17,7 +17,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: seata
-  namespace: seata-demo
+  namespace: seata-demo-at
   labels:
     app: seata
 spec:
@@ -34,7 +34,7 @@ spec:
       containers:
       - name: seata
         imagePullPolicy: IfNotPresent
-        image: registry.example.com/keid/seata-server:1.1.0
+        image: registry.example.com/seata/seata-server:1.1.0
         resources:
           limits:
             cpu: 1000m
